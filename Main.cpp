@@ -44,6 +44,9 @@ int main() {
 	//	Tell OpenGL the size of the window
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	
 
+	Shader defaultShader("default.vert", "default.frag");
+	defaultShader.Activate();
+
 	//	Run game logic init
 	//Start();
 
@@ -52,7 +55,7 @@ int main() {
 	//	Run as long as the window is open
 	while (!glfwWindowShouldClose(window)) {
 		//	Clear the screen
-		glClearColor(0.0f + 1 * glm::sin(_tempRainbowMultiplier + 32), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 11), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 4325), 1.0f);
+		glClearColor(0.0f + 1 * glm::sin(_tempRainbowMultiplier + 322), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 10291), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 5), 1.0f);
 
 		//	Clear color buffer	
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -70,6 +73,8 @@ int main() {
 		//	Poll for events
 		glfwPollEvents();
 	}
+
+	defaultShader.Delete();
 
 	return 0;
 }

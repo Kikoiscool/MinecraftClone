@@ -10,8 +10,9 @@
 #include <iostream>
 #include <cerrno>
 
-class Shader {
+std::string get_shader_file_contents(const char* path);
 
+class Shader {
 
 public:
 	//	Program ident

@@ -94,7 +94,7 @@ void Shader::compileErrors(unsigned int shader, unsigned int type)
 string get_shader_file_contents(const char* path) {
 	ifstream in(path, ios::in | ios::binary);
 	if (in.rdstate() == (ios_base::badbit | ios_base::failbit)) {
-		cout << "Error: " << strerror(errno) << endl;
+		throw(errno);
 		return "";
 	}
 	else if (in) {
@@ -104,7 +104,7 @@ string get_shader_file_contents(const char* path) {
 		return contents.str();
 	}
 	else {
-		cout << "Error: " << strerror(errno) << endl;
+		throw(errno);
 		return "";
 	}
 }
