@@ -10,10 +10,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Shader.h"
+#include "VAO.h"
+#include "VBO.h"
+#include "EBO.h"
 
 int main() {
-
-
 	//	Initialize GLFW
 	glfwInit();
 
@@ -47,10 +48,57 @@ int main() {
 	Shader defaultShader("default.vert", "default.frag");
 	defaultShader.Activate();
 
+	GLuint vertices[] = {
+		0, 0, 0,	//	0
+		1, 0, 0,	//	1
+		1, 1, 0,	//	2
+		0, 1, 0,	//	3
+	};
+
+	GLfloat fvertices[] = {
+		0.0f, 0.0f, 0.0f,	//	0
+		1.0f, 0.0f, 0.0f,	//	1
+		1.0f, 1.0f, 0.0f,	//	2
+		0.0f, 1.0f, 0.0f,	//	3
+	};
+
+	GLuint indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	VAO defaultVAO = VAO();
+	defaultVAO.Bind();
+
+	VBO defaultVBO = VBO();
+	defaultVBO.Bind();
+	defaultVBO.SetData(vertices, sizeof(vertices));
+	//defaultVBO.SetData(fvertices, sizeof(fvertices));
+
+	EBO defaultEBO = EBO();
+	defaultEBO.Bind();
+	defaultEBO.SetData(indices, sizeof(indices));
+
+
+	defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_UNSIGNED_INT, 3 * sizeof(GLuint), (void*)0);
+	//defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+
+	//defaultVAO.Unbind();
+	//defaultVBO.Unbind();
+	//defaultEBO.Unbind();
+
 	//	Run game logic init
 	//Start();
 
+	
+
+	//	==================================
+	//			Main loop
+	//	==================================
+
 	float _tempRainbowMultiplier = 0.0f;
+
+	defaultVAO.Bind();
 
 	//	Run as long as the window is open
 	while (!glfwWindowShouldClose(window)) {
@@ -65,6 +113,8 @@ int main() {
 		//	==================================
 		//			OpenGL Draw calls
 		//	==================================
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		//	Run game logic
 		//Update();
