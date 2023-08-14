@@ -72,12 +72,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\kikoi\source\repos\Kikoiscool\MinecraftClone\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\kikoi\source\repos\Kikoiscool\MinecraftClone\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\kikoi\source\repos\Kikoiscool\MinecraftClone\Libraries\include;C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\kikoi\source\repos\Kikoiscool\MinecraftClone\Libraries\lib;C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\include;C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Mohammad\source\repos\MinecraftClone\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Users\kikoi\source\repos\Kikoiscool\MinecraftClone\Libraries\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="default.png" />
+    <Image Include="sample.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

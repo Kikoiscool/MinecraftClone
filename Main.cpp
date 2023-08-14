@@ -15,6 +15,8 @@
 #include "EBO.h"
 #include "Texture.h"
 
+#include <stb/stb_image.h>
+
 int main() {
 	//	Initialize GLFW
 	glfwInit();
@@ -64,10 +66,10 @@ int main() {
 	};
 
 	GLfloat fvertices[] = {
-		0.0f, 0.0f, 0.0f,	//	0
-		1.0f, 0.0f, 0.0f,	//	1
-		1.0f, 1.0f, 0.0f,	//	2
-		0.0f, 1.0f, 0.0f,	//	3
+		0.0f, 0.0f, 0.0f, 0.0f, 0.0f,	//	0
+		1.0f, 0.0f, 0.0f, 1.0f, 0.0f,	//	1
+		1.0f, 1.0f, 0.0f, 1.0f, 1.0f,	//	2
+		0.0f, 1.0f, 0.0f, 0.0f, 1.0f	//	3
 	};
 
 	GLuint indices[] = {
@@ -88,16 +90,18 @@ int main() {
 	defaultEBO.SetData(indices, sizeof(indices));
 
 	// Vertex positions
-	defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_UNSIGNED_INT, 3 * sizeof(GLuint), (void*)0);
+	//defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_UNSIGNED_INT, 3 * sizeof(GLuint), (void*)0);
 	
 	// Vertex UV's
 	//defaultVAO.AddAttr(&defaultVBO, 1, 2, GL_UNSIGNED_INT, 2 * sizeof(GLuint), (void*)(3 * sizeof(GLuint)));
-	//defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+	defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+	defaultVAO.AddAttr(&defaultVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-	Texture defaultTexture = Texture("default.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	int h, w, f;
+	unsigned char* dumpBytes = stbi_load("sample2.png", &w, &h, &f, 0);
+
+	Texture defaultTexture = Texture("sample.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	defaultTexture.texUnit(defaultShader, "tex0", 0);
-
-
 
 	//defaultVAO.Unbind();
 	//defaultVBO.Unbind();
