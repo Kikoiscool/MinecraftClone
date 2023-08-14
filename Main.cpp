@@ -13,6 +13,7 @@
 #include "VAO.h"
 #include "VBO.h"
 #include "EBO.h"
+#include "Texture.h"
 
 int main() {
 	//	Initialize GLFW
@@ -54,6 +55,13 @@ int main() {
 		1, 1, 0,	//	2
 		0, 1, 0,	//	3
 	};
+	
+	GLuint t_vertices[] = {
+	0, 0, 0, 0, 0,	//	0
+	1, 0, 0, 1, 0,	//	1
+	1, 1, 0, 1, 1,	//	2
+	0, 1, 0, 0, 1	//	3
+	};
 
 	GLfloat fvertices[] = {
 		0.0f, 0.0f, 0.0f,	//	0
@@ -79,9 +87,17 @@ int main() {
 	defaultEBO.Bind();
 	defaultEBO.SetData(indices, sizeof(indices));
 
-
+	// Vertex positions
 	defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_UNSIGNED_INT, 3 * sizeof(GLuint), (void*)0);
+	
+	// Vertex UV's
+	//defaultVAO.AddAttr(&defaultVBO, 1, 2, GL_UNSIGNED_INT, 2 * sizeof(GLuint), (void*)(3 * sizeof(GLuint)));
 	//defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+
+	Texture defaultTexture = Texture("default.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	defaultTexture.texUnit(defaultShader, "tex0", 0);
+
+
 
 	//defaultVAO.Unbind();
 	//defaultVBO.Unbind();
@@ -100,13 +116,15 @@ int main() {
 
 	defaultVAO.Bind();
 
+
+	glEnable(GL_DEPTH_TEST);
 	//	Run as long as the window is open
 	while (!glfwWindowShouldClose(window)) {
 		//	Clear the screen
 		glClearColor(0.0f + 1 * glm::sin(_tempRainbowMultiplier + 322), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 10291), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 5), 1.0f);
 
 		//	Clear color buffer	
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		_tempRainbowMultiplier += 0.01f;
 
@@ -114,6 +132,9 @@ int main() {
 		//			OpenGL Draw calls
 		//	==================================
 
+		//	Bind texture
+		defaultTexture.Bind();
+		defaultVAO.Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		//	Run game logic
