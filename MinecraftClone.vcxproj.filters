@@ -42,6 +42,9 @@
     <ClCompile Include="stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lodepng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -59,6 +62,9 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\include\lodepng\lodepng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -73,7 +79,10 @@
     <Image Include="default.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="sample.png">
+    <Image Include="sample2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Red_Apple.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

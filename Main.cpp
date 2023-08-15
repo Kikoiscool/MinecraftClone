@@ -15,8 +15,6 @@
 #include "EBO.h"
 #include "Texture.h"
 
-#include <stb/stb_image.h>
-
 int main() {
 	//	Initialize GLFW
 	glfwInit();
@@ -66,15 +64,22 @@ int main() {
 	};
 
 	GLfloat fvertices[] = {
-		0.0f, 0.0f, 0.0f, 0.0f, 0.0f,	//	0
-		1.0f, 0.0f, 0.0f, 1.0f, 0.0f,	//	1
-		1.0f, 1.0f, 0.0f, 1.0f, 1.0f,	//	2
-		0.0f, 1.0f, 0.0f, 0.0f, 1.0f	//	3
+	-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Lower left corner
+	-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, // Upper left corner
+	 0.5f,  0.5f, 0.0f,	1.0f, 1.0f, // Upper right corner
+	 0.5f, -0.5f, 0.0f,	1.0f, 0.0f  // Lower right corner
+	};
+
+	GLfloat _fvertices[] = {
+	-0.5f, -0.5f, 0.0f,	//	0
+	-0.5f, 0.5f, 0.0f,	//	1
+	0.5f, 0.5f, 0.0f,	//	2
+	0.5f, -0.5f, 0.0f,//	3
 	};
 
 	GLuint indices[] = {
-		0, 1, 2,
-		2, 3, 0
+		0, 2, 1,
+		0, 3, 2
 	};
 
 	VAO defaultVAO = VAO();
@@ -82,7 +87,7 @@ int main() {
 
 	VBO defaultVBO = VBO();
 	defaultVBO.Bind();
-	defaultVBO.SetData(vertices, sizeof(vertices));
+	defaultVBO.SetData(fvertices, sizeof(fvertices));
 	//defaultVBO.SetData(fvertices, sizeof(fvertices));
 
 	EBO defaultEBO = EBO();
@@ -97,11 +102,13 @@ int main() {
 	defaultVAO.AddAttr(&defaultVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
 	defaultVAO.AddAttr(&defaultVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-	int h, w, f;
-	unsigned char* dumpBytes = stbi_load("sample2.png", &w, &h, &f, 0);
+	defaultShader.Activate();
 
 	Texture defaultTexture = Texture("sample.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	defaultTexture.texUnit(defaultShader, "tex0", 0);
+
+	defaultShader.Activate();
+	
 
 	//defaultVAO.Unbind();
 	//defaultVBO.Unbind();
@@ -121,14 +128,13 @@ int main() {
 	defaultVAO.Bind();
 
 
-	glEnable(GL_DEPTH_TEST);
 	//	Run as long as the window is open
 	while (!glfwWindowShouldClose(window)) {
 		//	Clear the screen
 		glClearColor(0.0f + 1 * glm::sin(_tempRainbowMultiplier + 322), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 10291), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 5), 1.0f);
 
 		//	Clear color buffer	
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 		
 		_tempRainbowMultiplier += 0.01f;
 
@@ -137,6 +143,8 @@ int main() {
 		//	==================================
 
 		//	Bind texture
+		
+		defaultShader.Activate();
 		defaultTexture.Bind();
 		defaultVAO.Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
