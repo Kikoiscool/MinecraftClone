@@ -138,25 +138,34 @@ int main() {
 	//glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
 
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+	//projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 
 	glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	glm::vec3 cameraRight = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), cameraDirection));
+	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+	glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+
+	glEnable(GL_DEPTH_TEST);
 	//	Run as long as the window is open
 	while (!glfwWindowShouldClose(window)) {
 		//	Clear the screen
 		glClearColor(0.0f + 1 * glm::sin(_tempRainbowMultiplier + 322), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 10291), 0.0f + 1 * glm::sin(_tempRainbowMultiplier + 5), 1.0f);
 
 		//	Clear color buffer	
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 	
 
@@ -166,8 +175,9 @@ int main() {
 
 		//glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
 		
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(0.5f), glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(0.5f), glm::vec3(0.0f, 0.0f, 1.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(defaultShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		
 		_tempRainbowMultiplier += 0.01f;
 
 		//	==================================
